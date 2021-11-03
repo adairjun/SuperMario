@@ -32,7 +32,7 @@ void game(SDL_Surface* screen)
     Input in;
     int keepGoing = 0;
     int previousTime = 0, currentTime = 0;
-    char *level;
+    char *theLevel;
 
     marioimages = malloc(12 * sizeof(Chars));
     memset(&in,0,sizeof(in)); //Set all keys to 0
@@ -59,15 +59,15 @@ void game(SDL_Surface* screen)
                         return;
                         break;
                     case SDLK_1:
-                        level="level1.lvl";
+                        theLevel="theLevel1.lvl";
                         keepGoing=1;
                         break;
                     case SDLK_2:
-                        level="level2.lvl";
+                        theLevel="theLevel2.lvl";
                         keepGoing=1;
                         break;
                     case SDLK_3:
-                        level="level3.lvl";
+                        theLevel="theLevel3.lvl";
                         keepGoing=1;
                         break;
                 }
@@ -80,7 +80,7 @@ void game(SDL_Surface* screen)
     keepGoing=0;
     S = LoadImages();
     shroom = LoadObject();
-    m = LoadMap(level);
+    m = LoadMap(theLevel);
     LoadChars(&mario, m, marioimages);
     ShowMap(m, screen, S);
     SDL_Flip(screen);
