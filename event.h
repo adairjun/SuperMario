@@ -31,7 +31,7 @@ void Evolve(Input* in, Map *m, Chars *mario, Sprites *S, Object* shroom);
 void Move(Map* m,Chars* mario,int vx,int vy, Sprites* S, Object* shroom);
 int MovementTest(Map* m,Chars* mario,int vx,int vy, Sprites* S, Object* shroom);
 void MapScroll(Map* m, Chars* mario);
-int CollisionDecor(Map* m, SDL_Rect* perso, Sprites* S, Chars* mario, int vx, Object* shroom);
+int CollisionDecor(Map* m, SDL_Rect* person, Sprites* S, Chars* mario, int vx, Object* shroom);
 int FinishLevel (SDL_Surface* screen, Chars* mario, Map* m);
 
 #endif

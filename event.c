@@ -41,13 +41,13 @@ void UpdateEvents(Input* in)
 	}
 }
 
-int CollisionDecor(Map* m, SDL_Rect* perso, Sprites* S, Chars* mario, int vx, Object* shroom)
+int CollisionDecor(Map* m, SDL_Rect* person, Sprites* S, Chars* mario, int vx, Object* shroom)
 {
 	int xmin,xmax,ymin,ymax,i,j,indicetile;
-	xmin = perso->x / Size_Sprite;
-	ymin = perso->y / Size_Sprite;
-	xmax = (perso->x + perso->w -1) / Size_Sprite;
-	ymax = (perso->y + perso->h -1) / Size_Sprite;
+	xmin = person->x / Size_Sprite;
+	ymin = person->y / Size_Sprite;
+	xmax = (person->x + person->w -1) / Size_Sprite;
+	ymax = (person->y + person->h -1) / Size_Sprite;
     mario->G=1;
 
     if (mario->lvllost>0){
@@ -61,9 +61,9 @@ int CollisionDecor(Map* m, SDL_Rect* perso, Sprites* S, Chars* mario, int vx, Ob
         mario->invisible=0;
     }
 
-if (perso->h+perso->y<m->Nb_Block_H*Size_Sprite-10){
-    j = (perso->y + perso->h +1) / Size_Sprite;
-    for(i=xmin;i<=xmax;i++) //Si il y a un bloc en dessous
+if (person->h+person->y<m->Nb_Block_H*Size_Sprite-10){
+    j = (person->y + person->h +1) / Size_Sprite;
+    for(i=xmin;i<=xmax;i++) //If there is a block below
     {
         indicetile = m->LoadedMap[i][j];
         if (S[indicetile].getThrough){
@@ -82,15 +82,15 @@ if (perso->h+perso->y<m->Nb_Block_H*Size_Sprite-10){
                     mario->lvllost=400;
             }
         }
-        else{ //Si on ne touche pas le soil et que le temps de saut est de plus de 1000, on retombe.
+        else{ //If we don't touch the ground and the jump time is over 1000, we fall back.
             if(mario->jumptime>1000)
                 mario->jump = 0;
         }
     }
 }
 
-    j = (perso->y - 1) / Size_Sprite;
-	for(i=xmin;i<=xmax;i++) //Si il y a un bloc en dessus
+    j = (person->y - 1) / Size_Sprite;
+	for(i=xmin;i<=xmax;i++) //If there is a block above
 	{
 		    indicetile = m->LoadedMap[i][j];
 		    if (S[indicetile].getThrough)
@@ -98,7 +98,7 @@ if (perso->h+perso->y<m->Nb_Block_H*Size_Sprite-10){
             if (indicetile==3){
                 if(S[m->LoadedMap[i][j-1]].getThrough==0){
                     if (m->Used[i][j]==0){
-                        shroom->nb_objet++; //Creation d'un champignon!
+                        shroom->nb_objet++; //Creation of a mushroom!
                         shroom->used[shroom->nb_objet]= 0;
                         shroom->position[shroom->nb_objet].x = i*Size_Sprite;
                         shroom->position[shroom->nb_objet].y = (j-1)*Size_Sprite;
@@ -108,21 +108,21 @@ if (perso->h+perso->y<m->Nb_Block_H*Size_Sprite-10){
             }
 	}
 
-	i= (perso->x + perso->w) / Size_Sprite; //Si on touche un bloc à notre droite,
+	i= (person->x + person->w) / Size_Sprite; //If we hit a block to our right,
     for(j=ymin;j<=ymax;j++)
     {
         indicetile = m->LoadedMap[i][j];
         if (S[indicetile].getThrough){
-            perso->x-=vx;
+            person->x-=vx;
             j=ymax+1;
             }
     }
-    i = (perso->x -1) / Size_Sprite; //Si on touche un bloc à note gauche
+    i = (person->x -1) / Size_Sprite; //If we touch a left notepad
     for(j=ymin;j<=ymax;j++)
     {
         indicetile = m->LoadedMap[i][j];
         if (S[indicetile].getThrough){
-            perso->x-=vx;
+            person->x-=vx;
             j=ymax+1;
             }
     }
@@ -130,14 +130,14 @@ if (perso->h+perso->y<m->Nb_Block_H*Size_Sprite-10){
         for(j=ymin;j<=ymax;j++)
         {
             indicetile = m->LoadedMap[i][j];
-            if (indicetile==8 || indicetile==9){ //Si on touche le drapeau de la fin
+            if (indicetile==8 || indicetile==9){ // If we touch the flag at the end
                     mario->win = 1;
                 }
         }
     }
 
 
-	return 0; //Si pas de collision
+	return 0; // If no collision
 }
 
 int MovementTest(Map* m, Chars* mario, int vx, int vy, Sprites* S, Object* shroom)
@@ -152,19 +152,19 @@ int MovementTest(Map* m, Chars* mario, int vx, int vy, Sprites* S, Object* shroo
 
     if(test.y+test.h>(Size_Sprite*m->Nb_Block_H)+100)
         mario->lose=1;
-	if (mario->G==1) // Gravité activée si on ne touche pas le soil
+	if (mario->G==1) //Gravity activated if the soil is not touched
 		test.y += 2;
 	else
         mario->jumptime = 1;
-    if (test.x-1<0) //Si on touche le bord gauche de la map
+    if (test.x-1<0) // If we touch the left edge of the map
         test.x-=vx;
-    if (test.x + test.w>=m->Nb_Block_W*Size_Sprite-2) //Si on touche le bord droite de la map
+    if (test.x + test.w>=m->Nb_Block_W*Size_Sprite-2) // If we touch the right edge of the map
         test.x-=vx;
-    if (test.y<0){ //Si on touche le haut de la map
+    if (test.y<0){ // If we touch the top of the map
         mario->jumptime = 1001;
         test.y+=vy;
     }
-	if (temp==0) //Si pas de colision on modifie la position du personnage
+	if (temp==0) // If no collision, we modify the position of the character
 	{
 		mario->position = test;
 		return 1;
@@ -174,14 +174,14 @@ int MovementTest(Map* m, Chars* mario, int vx, int vy, Sprites* S, Object* shroo
 
 void Move(Map* m, Chars* mario,int vx,int vy, Sprites* S, Object* shroom)
 {
-	if (vx>=Size_Sprite || vy>=Size_Sprite) //si jamais le vercteur est plus grand qu'un sprite, pour pas qu'on traverse.
+	if (vx>=Size_Sprite || vy>=Size_Sprite) //if ever the verctor is bigger than a sprite, so that we don't get throught it
 	{
 		Move(m,mario,vx/2,vy/2,S,shroom);
 		Move(m,mario,vx/3,vy/3,S,shroom);
 		Move(m,mario,vx/4,vy/4,S,shroom);
 		return;
 	}
-	if (MovementTest(m,mario,vx,vy,S,shroom)==1) //Si pas de collision
+	if (MovementTest(m,mario,vx,vy,S,shroom)==1) //If no collision
 		return;
 
 }
@@ -203,7 +203,7 @@ void Evolve(Input* in, Map *m, Chars *mario, Sprites *S, Object* shroom)
             vy -= 5;
 
             if(mario->jumptime>1000)
-                in->key[SDLK_UP]=0; //Ne pas sautez tout le temps si on laisse la touche haut activée
+                in->key[SDLK_UP]=0; //Do not jump all the time if you leave the up key activated
         }
 	}
 	if (in->key[SDLK_LEFT]){
@@ -240,12 +240,12 @@ int FinishLevel (SDL_Surface* screen, Chars* mario, Map* m)
     if (mario->win==1)
     {
         audio_play(4);
-        SDL_Surface* reussi = IMG_Load("images/win.png");
-        SDL_Rect positionreussi ;
-        positionreussi.x = WindowW/2-reussi->w/2;
-        positionreussi.y = WindowH/2-reussi->h/2;
+        SDL_Surface* succeeded = IMG_Load("images/win.png");
+        SDL_Rect positionsucceeded ;
+        positionsucceeded.x = WindowW/2-succeeded->w/2;
+        positionsucceeded.y = WindowH/2-succeeded->h/2;
 
-        SDL_BlitSurface(reussi,NULL,screen,&positionreussi);
+        SDL_BlitSurface(succeeded,NULL,screen,&positionsucceeded);
         SDL_Flip(screen);
         SDL_Delay(1000);
 
@@ -263,19 +263,19 @@ int FinishLevel (SDL_Surface* screen, Chars* mario, Map* m)
             }
         }
     mario->win=0;
-    SDL_FreeSurface(reussi);
+    SDL_FreeSurface(succeeded);
     return 1;
     }
 
     if (mario->lose==1)
     {
         audio_play(3);
-        SDL_Surface* perdu = IMG_Load("images/lose.png");
-        SDL_Rect positionperdu;
-        positionperdu.x = WindowW/2-perdu->w/2;
-        positionperdu.y = WindowH/2-perdu->h/2;
+        SDL_Surface* failed = IMG_Load("images/lose.png");
+        SDL_Rect positionfailed;
+        positionfailed.x = WindowW/2-failed->w/2;
+        positionfailed.y = WindowH/2-failed->h/2;
 
-        SDL_BlitSurface(perdu,NULL,screen,&positionperdu);
+        SDL_BlitSurface(failed,NULL,screen,&positionfailed);
         SDL_Flip(screen);
 
         while (keepGoing)
@@ -293,7 +293,7 @@ int FinishLevel (SDL_Surface* screen, Chars* mario, Map* m)
         }
 
     mario->lose=0;
-    SDL_FreeSurface(perdu);
+    SDL_FreeSurface(failed);
     return 1;
     }
 
