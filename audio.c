@@ -21,7 +21,7 @@ FMOD_SYSTEM *sys; // FMOD, library that manages music
 void audio_init(){
     FMOD_System_Create(&sys);
     FMOD_System_Init(sys, 4, FMOD_INIT_NORMAL, NULL);
-    FMOD_System_CreateSound(sys, "sound/music.mp3", FMOD_SOFTWARE | FMOD_2D | FMOD_CREATESTREAM | FMOD_LOOP_NORMAL, 0, &music); //Load the music
+    FMOD_System_CreateSound(sys, "sound/music.mp3", FMOD_2D | FMOD_CREATESTREAM | FMOD_LOOP_NORMAL, 0, &music); //Load the music
     FMOD_Sound_SetLoopCount(music, -1); // Activate endless repetition
     FMOD_System_CreateSound(sys, "sound/smb_jumpsmall.wav", FMOD_CREATESAMPLE, 0, &jump);
     FMOD_System_CreateSound(sys, "sound/smb_mariodie.wav", FMOD_CREATESAMPLE, 0, &lose);
@@ -34,15 +34,15 @@ void audio_play(int song){
     if (song==1)
         FMOD_System_PlaySound(sys, 0, music, 0, NULL); //Joue la musique
     if (song==2)
-        FMOD_System_PlaySound(sys, FMOD_CHANNEL_FREE, jump, 0, NULL);
+        FMOD_System_PlaySound(sys, NULL, jump, 0, NULL);
     if (song==3)
-        FMOD_System_PlaySound(sys, FMOD_CHANNEL_FREE, lose, 0, NULL);
+        FMOD_System_PlaySound(sys, NULL, lose, 0, NULL);
     if (song==4)
-        FMOD_System_PlaySound(sys, FMOD_CHANNEL_FREE, win, 0, NULL);
+        FMOD_System_PlaySound(sys, NULL, win, 0, NULL);
     if (song==5)
-        FMOD_System_PlaySound(sys, FMOD_CHANNEL_FREE, shroom, 0, NULL);
+        FMOD_System_PlaySound(sys, NULL, shroom, 0, NULL);
     if (song==6)
-        FMOD_System_PlaySound(sys, FMOD_CHANNEL_FREE, damage, 0, NULL);
+        FMOD_System_PlaySound(sys, NULL, damage, 0, NULL);
 }
 
 void audio_stop(){
