@@ -28,28 +28,28 @@ void credits(SDL_Surface* screen)
     positionCredits.x = screen->w / 2 - ImgCredits->w / 2;
     positionCredits.y = -200;
 
-    int continuer = 1;
+    int keepGoing = 1;
 
-    while (continuer)
+    while (keepGoing)
         {
             SDL_PollEvent(&event);
             switch(event.type)
             {
                 case SDL_QUIT:
-                    continuer = 0;
+                    keepGoing = 0;
                     break;
                 case SDL_KEYDOWN:
                     switch(event.key.keysym.sym)
                     {
                         case SDLK_ESCAPE:
-                            continuer = 0;
+                            keepGoing = 0;
                             break;
                     }
             }
 
     if (positionCredits.y > 400+ImgCredits->h/2)
     {
-        continuer = 0;
+        keepGoing = 0;
     }
 
         tempsActuel = SDL_GetTicks();

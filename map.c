@@ -30,14 +30,14 @@ Sprites* ChargerImages()
     S[0].sprite = IMG_Load("images/sky.png");
     S[1].sprite = IMG_Load("images/sol.png");
     S[2].sprite = IMG_Load("images/block.png");
-    S[3].sprite = IMG_Load("images/boite.png");
-    S[4].sprite = IMG_Load("images/tuyau1.png");
-    S[5].sprite = IMG_Load("images/tuyau2.png");
-    S[6].sprite = IMG_Load("images/tuyau3.png");
-    S[7].sprite = IMG_Load("images/tuyau4.png");
+    S[3].sprite = IMG_Load("images/box.png");
+    S[4].sprite = IMG_Load("images/pipe1.png");
+    S[5].sprite = IMG_Load("images/pipe2.png");
+    S[6].sprite = IMG_Load("images/pipe3.png");
+    S[7].sprite = IMG_Load("images/pipe4.png");
     S[8].sprite = IMG_Load("images/fin1.png");
     S[9].sprite = IMG_Load("images/fin2.png");
-    S[10].sprite = IMG_Load("images/pique.png");
+    S[10].sprite = IMG_Load("images/spades.png");
 
     for(i=0;i<NbSprites;i++){
     S[i].sprite = SDL_DisplayFormat(S[i].sprite);

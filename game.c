@@ -30,7 +30,7 @@ void game(SDL_Surface* screen)
     Chars* marioimages;
     Object* shroom;
     Input in;
-    int continuer = 0;
+    int keepGoing = 0;
     int tempsPrecedent = 0, tempsActuel = 0;
     char *niveau;
 
@@ -47,7 +47,7 @@ void game(SDL_Surface* screen)
     SDL_Flip(screen);
     SDL_FreeSurface(level);
 
-    while (!continuer)
+    while (!keepGoing)
     {
         SDL_WaitEvent(&event);
         switch(event.type)
@@ -60,15 +60,15 @@ void game(SDL_Surface* screen)
                         break;
                     case SDLK_1:
                         niveau="niveau1.lvl";
-                        continuer=1;
+                        keepGoing=1;
                         break;
                     case SDLK_2:
                         niveau="niveau2.lvl";
-                        continuer=1;
+                        keepGoing=1;
                         break;
                     case SDLK_3:
                         niveau="niveau3.lvl";
-                        continuer=1;
+                        keepGoing=1;
                         break;
                 }
                 break;
@@ -77,7 +77,7 @@ void game(SDL_Surface* screen)
 
     screen = SDL_SetVideoMode( WindowW, WindowH, 32,SDL_HWSURFACE|SDL_DOUBLEBUF);
 
-    continuer=0;
+    keepGoing=0;
     S = ChargerImages();
     shroom = ChargerObject();
     m = ChargerMap(niveau);
@@ -85,7 +85,7 @@ void game(SDL_Surface* screen)
     AfficherMap(m, screen, S);
     SDL_Flip(screen);
 
-while(!in.key[SDLK_ESCAPE] && !in.quit && !continuer)// simplification de la gestion des touches
+while(!in.key[SDLK_ESCAPE] && !in.quit && !keepGoing)// simplification de la gestion des touches
 	{
         tempsActuel = SDL_GetTicks();
         if (tempsActuel - tempsPrecedent > 4) /* Si 30 ms se sont écoulées depuis le dernier tour de boucle */
@@ -98,7 +98,7 @@ while(!in.key[SDLK_ESCAPE] && !in.quit && !continuer)// simplification de la ges
             AfficherObject(screen, shroom, m->xscroll,m->yscroll);
             AfficherPerso(&mario,screen,m->xscroll,m->yscroll, marioimages);
             SDL_Flip(screen);
-            continuer = NiveauFini(screen, &mario, m);
+            keepGoing = NiveauFini(screen, &mario, m);
             tempsPrecedent = tempsActuel; /* Le temps "actuel" devient le temps "precedent" pour nos futurs calculs */
         }
         else

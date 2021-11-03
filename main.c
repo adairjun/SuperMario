@@ -26,35 +26,35 @@ int main(int argc, char *argv[])
     SDL_Rect positionMenu;
     SDL_Event event;
 
-    int continuer = 1;
+    int keepGoing = 1;
 
     audio_init();
     audio_play(1);
 
     SDL_Init(SDL_INIT_VIDEO);
 
-    SDL_WM_SetIcon(IMG_Load("images/Mario.png"), NULL); // L'icône doit être chargée avant SDL_SetVideoMode
-    screen = SDL_SetVideoMode(600, 600, 32, SDL_HWSURFACE | SDL_DOUBLEBUF); //Ouvre la page
-    SDL_WM_SetCaption("Super Mario BROS", NULL); //Définit le titre
+    SDL_WM_SetIcon(IMG_Load("images/Mario.png"), NULL); // Icon must be loaded before SDL_SetVideoMode
+    screen = SDL_SetVideoMode(600, 600, 32, SDL_HWSURFACE | SDL_DOUBLEBUF); //Open the page
+    SDL_WM_SetCaption("Super Mario BROS", NULL); //Define the title
 
-    menu = IMG_Load("images/menu.jpg"); //Charge l'image du menu
-    positionMenu.x = screen->w / 2 - menu->w / 2; //Définit le menu au centre de la fenêtre
+    menu = IMG_Load("images/menu.jpg"); //Load menu image
+    positionMenu.x = screen->w / 2 - menu->w / 2; //Sets the menu to the center of the window
     positionMenu.y = 0;
 
 
-    while (continuer)
+    while (keepGoing)
     {
         SDL_WaitEvent(&event);
         switch(event.type)
         {
             case SDL_QUIT:
-                continuer = 0;
+                keepGoing = 0;
                 break;
             case SDL_KEYDOWN:
                 switch(event.key.keysym.sym)
                 {
                     case SDLK_ESCAPE:
-                        continuer = 0;
+                        keepGoing = 0;
                         break;
                     case SDLK_1:
 
@@ -68,14 +68,14 @@ int main(int argc, char *argv[])
                 break;
         }
 
-        SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0)); //Fond noir
-        SDL_BlitSurface(menu, NULL, screen, &positionMenu); //Imprime le menu sur la page
+        SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0)); //Black background
+        SDL_BlitSurface(menu, NULL, screen, &positionMenu); //Print the menu on the page
         SDL_Flip(screen);
     }
 
     audio_stop();
-    SDL_FreeSurface(menu); //Efface le menu
-    SDL_Quit(); //Quitte
+    SDL_FreeSurface(menu); //Clear menu
+    SDL_Quit(); //Quit
 
     return EXIT_SUCCESS;
 }

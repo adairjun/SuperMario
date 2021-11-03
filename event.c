@@ -235,7 +235,7 @@ void MapScroll(Map* m, Chars* mario)
 int NiveauFini (SDL_Surface* screen, Chars* mario, Map* m)
 {
     SDL_Event event;
-    int continuer;
+    int keepGoing;
 
     if (mario->win==1)
     {
@@ -249,16 +249,16 @@ int NiveauFini (SDL_Surface* screen, Chars* mario, Map* m)
         SDL_Flip(screen);
         SDL_Delay(1000);
 
-        while (continuer)
+        while (keepGoing)
         {
             SDL_WaitEvent(&event);
             switch(event.type)
             {
                 case SDL_QUIT:
-                    continuer = 0;
+                    keepGoing = 0;
                     break;
                 case SDL_KEYDOWN:
-                    continuer = 0;
+                    keepGoing = 0;
                     break;
             }
         }
@@ -278,16 +278,16 @@ int NiveauFini (SDL_Surface* screen, Chars* mario, Map* m)
         SDL_BlitSurface(perdu,NULL,screen,&positionperdu);
         SDL_Flip(screen);
 
-        while (continuer)
+        while (keepGoing)
         {
             SDL_WaitEvent(&event);
             switch(event.type)
             {
                 case SDL_QUIT:
-                    continuer = 0;
+                    keepGoing = 0;
                     break;
                 case SDL_KEYDOWN:
-                    continuer = 0;
+                    keepGoing = 0;
                     break;
             }
         }
