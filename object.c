@@ -15,7 +15,7 @@ Création: 24.01.13
 
 #include "object.h"
 
-void AfficherObject(SDL_Surface* screen, Object* shroom, int xscroll, int yscroll)
+void ShowObject(SDL_Surface* screen, Object* shroom, int xscroll, int yscroll)
 {
     int i;
     SDL_Rect position[50];
@@ -34,7 +34,7 @@ void AfficherObject(SDL_Surface* screen, Object* shroom, int xscroll, int yscrol
     }
 }
 
-Object* ChargerObject()
+Object* LoadObject()
 {
     Object* shroom;
     shroom = malloc(sizeof(Object));
@@ -45,7 +45,7 @@ Object* ChargerObject()
     return shroom;
 }
 
-void LibererObject (Object* shroom)
+void FreeObject (Object* shroom)
 {
     SDL_FreeSurface(shroom->image);
     free(shroom);

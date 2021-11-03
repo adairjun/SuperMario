@@ -20,7 +20,7 @@ Création: 07.01.13
 #include "event.h"
 #include "map.h"
 
-Sprites* ChargerImages()
+Sprites* LoadImages()
 {
     Sprites* S;
     int i;
@@ -43,22 +43,22 @@ Sprites* ChargerImages()
     S[i].sprite = SDL_DisplayFormat(S[i].sprite);
     }
 
-    S[0].traverser = 0;
-    S[1].traverser = 1;
-    S[2].traverser = 1;
-    S[3].traverser = 1;
-    S[4].traverser = 1;
-    S[5].traverser = 1;
-    S[6].traverser = 1;
-    S[7].traverser = 1;
-    S[8].traverser = 0;
-    S[9].traverser = 0;
-    S[10].traverser = 1;
+    S[0].getThrough = 0;
+    S[1].getThrough = 1;
+    S[2].getThrough = 1;
+    S[3].getThrough = 1;
+    S[4].getThrough = 1;
+    S[5].getThrough = 1;
+    S[6].getThrough = 1;
+    S[7].getThrough = 1;
+    S[8].getThrough = 0;
+    S[9].getThrough = 0;
+    S[10].getThrough = 1;
 
     return S;
 }
 
-Map* ChargerMap(char* level)
+Map* LoadMap(char* level)
 {
     Map* m;
 	FILE* F;
@@ -69,12 +69,12 @@ Map* ChargerMap(char* level)
 	m->yscroll = 0;
 
     int i,j;
-	char buf[5000];  // Buffer pour le nom du niveau
+	char buf[5000];  // Buffer for the name of the level
 
-	fscanf(F,"%s",buf); // Nom du niveau
-	fscanf(F,"%d %d",&m->Nb_Block_W,&m->Nb_Block_H); //Nombre de block largeur et hauteur
+	fscanf(F,"%s",buf); // Level name
+	fscanf(F,"%d %d",&m->Nb_Block_W,&m->Nb_Block_H); //Number of block width and height
 
-    m->LoadedMap = malloc(m->Nb_Block_W*sizeof(Uint16*)); //allocation mémoire pour le tableau
+    m->LoadedMap = malloc(m->Nb_Block_W*sizeof(Uint16*)); //memory allocation for the array
     m->Used = malloc(m->Nb_Block_W*sizeof(Uint16*));
 
     for(i=0;i<m->Nb_Block_W;i++)
@@ -98,7 +98,7 @@ Map* ChargerMap(char* level)
 	return m;
 }
 
-void AfficherMap(Map* m, SDL_Surface* screen, Sprites* S)
+void ShowMap(Map* m, SDL_Surface* screen, Sprites* S)
 {
 	int i,j;
 	SDL_Rect Rect_dest;
@@ -129,7 +129,7 @@ void AfficherMap(Map* m, SDL_Surface* screen, Sprites* S)
 
 
 
-void LibererMap(Map* m, Sprites* S)
+void FreeMap(Map* m, Sprites* S)
 {
 
     int i;

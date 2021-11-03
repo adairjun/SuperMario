@@ -26,8 +26,8 @@ typedef struct
     int nb_objet, used[50];
 }Object;
 
-Object* ChargerObject();
-void AfficherObject(SDL_Surface* screen,Object* shroom, int xscroll, int yscroll);
-void LibererObject (Object* shroom);
+Object* LoadObject();
+void ShowObject(SDL_Surface* screen,Object* shroom, int xscroll, int yscroll);
+void FreeObject (Object* shroom);
 
 #endif

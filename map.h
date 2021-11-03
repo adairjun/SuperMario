@@ -16,8 +16,8 @@ Création: 07.01.13
 #include <SDL.h>
 
 
-#define NbSprites 11 // À modifier si on ajouter des sprites
-#define Size_Sprite 40 // A modifier si on change taille sprite
+#define NbSprites 11 // To be modified if you add sprites
+#define Size_Sprite 40 // To modify if we change the sprite size
 
 typedef struct
 {
@@ -30,12 +30,12 @@ typedef struct
 typedef struct
 {
     SDL_Surface* sprite;
-    int traverser;
+    int getThrough;
 }Sprites;
 
-Sprites* ChargerImages();
-Map* ChargerMap(char* level);
-void AfficherMap(Map* m, SDL_Surface* screen, Sprites* S);
-void LibererMap(Map* m, Sprites* S);
+Sprites* LoadImages();
+Map* LoadMap(char* level);
+void ShowMap(Map* m, SDL_Surface* screen, Sprites* S);
+void FreeMap(Map* m, Sprites* S);
 
 #endif

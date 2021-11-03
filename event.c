@@ -66,7 +66,7 @@ if (perso->h+perso->y<m->Nb_Block_H*Size_Sprite-10){
     for(i=xmin;i<=xmax;i++) //Si il y a un bloc en dessous
     {
         indicetile = m->LoadedMap[i][j];
-        if (S[indicetile].traverser){
+        if (S[indicetile].getThrough){
             mario->G=0;
             mario->jump = 1;
         }
@@ -93,10 +93,10 @@ if (perso->h+perso->y<m->Nb_Block_H*Size_Sprite-10){
 	for(i=xmin;i<=xmax;i++) //Si il y a un bloc en dessus
 	{
 		    indicetile = m->LoadedMap[i][j];
-		    if (S[indicetile].traverser)
+		    if (S[indicetile].getThrough)
                 mario->jumptime = 1001;
             if (indicetile==3){
-                if(S[m->LoadedMap[i][j-1]].traverser==0){
+                if(S[m->LoadedMap[i][j-1]].getThrough==0){
                     if (m->Used[i][j]==0){
                         shroom->nb_objet++; //Creation d'un champignon!
                         shroom->used[shroom->nb_objet]= 0;
@@ -112,7 +112,7 @@ if (perso->h+perso->y<m->Nb_Block_H*Size_Sprite-10){
     for(j=ymin;j<=ymax;j++)
     {
         indicetile = m->LoadedMap[i][j];
-        if (S[indicetile].traverser){
+        if (S[indicetile].getThrough){
             perso->x-=vx;
             j=ymax+1;
             }
@@ -121,7 +121,7 @@ if (perso->h+perso->y<m->Nb_Block_H*Size_Sprite-10){
     for(j=ymin;j<=ymax;j++)
     {
         indicetile = m->LoadedMap[i][j];
-        if (S[indicetile].traverser){
+        if (S[indicetile].getThrough){
             perso->x-=vx;
             j=ymax+1;
             }

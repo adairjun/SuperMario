@@ -32,16 +32,16 @@ void game(SDL_Surface* screen)
     Input in;
     int keepGoing = 0;
     int previousTime = 0, currentTime = 0;
-    char *niveau;
+    char *level;
 
     marioimages = malloc(12 * sizeof(Chars));
-    memset(&in,0,sizeof(in)); //Set toutes les touches à 0
+    memset(&in,0,sizeof(in)); //Set all keys to 0
 
     SDL_Rect positionLevel;
     SDL_Surface* level;
     screen = SDL_SetVideoMode(600, 600, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
-    level = IMG_Load("images/lvl.jpg"); //Charge l'image du menu
-    positionLevel.x = screen->w / 2 - level->w / 2; //Définit le menu au centre de la fenêtre
+    level = IMG_Load("images/lvl.jpg"); //Load menu image
+    positionLevel.x = screen->w / 2 - level->w / 2; //Sets the menu to the center of the window
     positionLevel.y = 0;
     SDL_BlitSurface(level, NULL, screen, &positionLevel);
     SDL_Flip(screen);
@@ -59,15 +59,15 @@ void game(SDL_Surface* screen)
                         return;
                         break;
                     case SDLK_1:
-                        niveau="niveau1.lvl";
+                        level="level1.lvl";
                         keepGoing=1;
                         break;
                     case SDLK_2:
-                        niveau="niveau2.lvl";
+                        level="level2.lvl";
                         keepGoing=1;
                         break;
                     case SDLK_3:
-                        niveau="niveau3.lvl";
+                        level="level3.lvl";
                         keepGoing=1;
                         break;
                 }
@@ -78,28 +78,28 @@ void game(SDL_Surface* screen)
     screen = SDL_SetVideoMode( WindowW, WindowH, 32,SDL_HWSURFACE|SDL_DOUBLEBUF);
 
     keepGoing=0;
-    S = ChargerImages();
-    shroom = ChargerObject();
-    m = ChargerMap(niveau);
+    S = LoadImages();
+    shroom = LoadObject();
+    m = LoadMap(level);
     LoadChars(&mario, m, marioimages);
-    AfficherMap(m, screen, S);
+    ShowMap(m, screen, S);
     SDL_Flip(screen);
 
-while(!in.key[SDLK_ESCAPE] && !in.quit && !keepGoing)// simplification de la gestion des touches
+while(!in.key[SDLK_ESCAPE] && !in.quit && !keepGoing)// simplification of key management
 	{
         currentTime = SDL_GetTicks();
-        if (currentTime - previousTime > 4) /* Si 30 ms se sont écoulées depuis le dernier tour de boucle */
+        if (currentTime - previousTime > 4) /* If 4 ms have elapsed since the last loop round */
         {
             UpdateEvents(&in);
             MapScroll(m, &mario);
             Evolve(&in,m,&mario,S, shroom);
-            AfficherMap(m,screen,S);
+            ShowMap(m,screen,S);
             objectmove(shroom, &mario, m->xscroll,m->yscroll, m, S);
-            AfficherObject(screen, shroom, m->xscroll,m->yscroll);
+            ShowObject(screen, shroom, m->xscroll,m->yscroll);
             ShowPerson(&mario,screen,m->xscroll,m->yscroll, marioimages);
             SDL_Flip(screen);
             keepGoing = FinishLevel(screen, &mario, m);
-            previousTime = currentTime; /* Le temps "actuel" devient le temps "precedent" pour nos futurs calculs */
+            previousTime = currentTime; /* The "current" time becomes the "previous" time for our future calculations */
         }
         else
         {
@@ -107,7 +107,7 @@ while(!in.key[SDLK_ESCAPE] && !in.quit && !keepGoing)// simplification de la ges
         }
     }
 
-    LibererMap(m,S);
+    FreeMap(m,S);
     FreeChars(&mario, marioimages);
-    LibererObject(shroom);
+    FreeObject(shroom);
 }

@@ -28,9 +28,9 @@ void objectmove(Object* shroom, Chars* mario, int xscroll, int yscroll, Map* m, 
         position[i].h = Size_Sprite;
     }
 
-   for (i=1; i<=shroom->nb_objet; i++){ //On passe une fois par champignon
+   for (i=1; i<=shroom->nb_objet; i++){ //We pass once per mushroom
        if (shroom->used[i]==0){
-            if((position[i].x >= mario->position.x -xscroll + mario->position.w) //Check si mario touche le champignon
+            if((position[i].x >= mario->position.x -xscroll + mario->position.w) //Check if mario touches the mushroom
             || (position[i].x + position[i].w <= mario->position.x -xscroll)
             || (position[i].y >= mario->position.y -yscroll + mario->position.h)
             || (position[i].y + position[i].h <= mario->position.y - yscroll)
