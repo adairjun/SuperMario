@@ -15,13 +15,13 @@ Création: 17.01.13
 
 #include "char.h"
 
-void AfficherPerso(Chars* mario, SDL_Surface* screen, int xscroll, int yscroll, Chars* marioimages)
+void ShowPerson(Chars* mario, SDL_Surface* screen, int xscroll, int yscroll, Chars* marioimages)
 {
 
-	SDL_Rect positionsurecran = mario->position;
+	SDL_Rect positionscreen = mario->position;
 	SDL_Surface *mario1, *mario2, *mario3, *mario4, *mario5, *mario6;
-	positionsurecran.x -= xscroll; //Empèche de déplacer le perso déplacer en scrollant
-	positionsurecran.y -= yscroll; //Empèche de déplacer le perso déplacer en scrollant
+	positionscreen.x -= xscroll; //Prevents moving the character scrolling
+	positionscreen.y -= yscroll; //Prevents moving the character scrolling
 	mario->temp++;
 
 	if (mario->lvl==1){
@@ -47,9 +47,9 @@ void AfficherPerso(Chars* mario, SDL_Surface* screen, int xscroll, int yscroll, 
 
     if (mario->invisible==0){
         if(mario->directionmario==2){
-            mario->dernieredirection=2;
+            mario->lastdirection=2;
             if (mario->selectedmario==1){
-                SDL_BlitSurface(mario1,NULL,screen,&positionsurecran);
+                SDL_BlitSurface(mario1,NULL,screen,&positionscreen);
                 mario->directionmario=0;
                 if (mario->temp>30){
                 mario->selectedmario = 2;
@@ -58,7 +58,7 @@ void AfficherPerso(Chars* mario, SDL_Surface* screen, int xscroll, int yscroll, 
                 return;
             }
             if (mario->selectedmario==2){
-                SDL_BlitSurface(mario2,NULL,screen,&positionsurecran);
+                SDL_BlitSurface(mario2,NULL,screen,&positionscreen);
                 mario->directionmario=0;
                 if (mario->temp>30){
                 mario->selectedmario = 3;
@@ -67,7 +67,7 @@ void AfficherPerso(Chars* mario, SDL_Surface* screen, int xscroll, int yscroll, 
                 return;
             }
             if (mario->selectedmario==3){
-                SDL_BlitSurface(mario3,NULL,screen,&positionsurecran);
+                SDL_BlitSurface(mario3,NULL,screen,&positionscreen);
                 mario->directionmario=0;
                 if (mario->temp>30){
                 mario->selectedmario = 1;
@@ -77,9 +77,9 @@ void AfficherPerso(Chars* mario, SDL_Surface* screen, int xscroll, int yscroll, 
             }
         }
         else if(mario->directionmario==1){
-            mario->dernieredirection = 1;
+            mario->lastdirection = 1;
             if (mario->selectedmario==1){
-                SDL_BlitSurface(mario4,NULL,screen,&positionsurecran);
+                SDL_BlitSurface(mario4,NULL,screen,&positionscreen);
                 mario->directionmario=0;
                 if (mario->temp>30){
                 mario->selectedmario = 2;
@@ -88,7 +88,7 @@ void AfficherPerso(Chars* mario, SDL_Surface* screen, int xscroll, int yscroll, 
                 return;
             }
             if (mario->selectedmario==2){
-                SDL_BlitSurface(mario5,NULL,screen,&positionsurecran);
+                SDL_BlitSurface(mario5,NULL,screen,&positionscreen);
                 mario->directionmario=0;
                 if (mario->temp>30){
                 mario->selectedmario = 3;
@@ -97,7 +97,7 @@ void AfficherPerso(Chars* mario, SDL_Surface* screen, int xscroll, int yscroll, 
                 return;
             }
             if (mario->selectedmario==3){
-                SDL_BlitSurface(mario6,NULL,screen,&positionsurecran);
+                SDL_BlitSurface(mario6,NULL,screen,&positionscreen);
                 mario->directionmario=0;
                 if (mario->temp>30){
                 mario->selectedmario = 1;
@@ -107,11 +107,11 @@ void AfficherPerso(Chars* mario, SDL_Surface* screen, int xscroll, int yscroll, 
             }
         }
         else{
-            if (mario->dernieredirection==1){
-                SDL_BlitSurface(mario4,NULL,screen,&positionsurecran);
+            if (mario->lastdirection==1){
+                SDL_BlitSurface(mario4,NULL,screen,&positionscreen);
             }
             else{
-                SDL_BlitSurface(mario1,NULL,screen,&positionsurecran);
+                SDL_BlitSurface(mario1,NULL,screen,&positionscreen);
             }
         }
     }
@@ -119,7 +119,7 @@ void AfficherPerso(Chars* mario, SDL_Surface* screen, int xscroll, int yscroll, 
 
 }
 
-void ChargerChars(Chars* mario, Map* m, Chars* marioimages)
+void LoadChars(Chars* mario, Map* m, Chars* marioimages)
 {
 
     mario->position.w = 30;
@@ -129,7 +129,7 @@ void ChargerChars(Chars* mario, Map* m, Chars* marioimages)
 
     mario->selectedmario = 1;
     mario->lvl = 1;
-    mario->lvlperdu=0;
+    mario->lvllost=0;
 
     marioimages[0].image = IMG_Load("images/mario1.png");
     marioimages[1].image = IMG_Load("images/mario2.png");
@@ -147,7 +147,7 @@ void ChargerChars(Chars* mario, Map* m, Chars* marioimages)
 
 }
 
-void LibererChars (Chars* mario, Chars* marioimages)
+void FreeChars (Chars* mario, Chars* marioimages)
 {
     SDL_FreeSurface(marioimages[0].image);
     SDL_FreeSurface(marioimages[1].image);

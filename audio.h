@@ -8,7 +8,7 @@ Antoine Drabble
 Création: 22.01.13
 */
 
-#ifndef ADUIO_DEF//ceci permet d'éviter de faire plusieurs fois le même include.
+#ifndef ADUIO_DEF//this makes it possible to avoid doing the same include several times.
 #define AUDIO_DEF
 
 #include <stdlib.h>

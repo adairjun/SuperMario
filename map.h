@@ -8,7 +8,7 @@ Antoine Drabble
 Création: 07.01.13
 */
 
-#ifndef MAP_DEF//ceci permet d'éviter de faire plusieurs fois le même include.
+#ifndef MAP_DEF//this makes it possible to avoid doing the same include several times.
 #define MAP_DEF
 
 #include <stdlib.h>

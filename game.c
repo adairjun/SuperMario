@@ -31,7 +31,7 @@ void game(SDL_Surface* screen)
     Object* shroom;
     Input in;
     int keepGoing = 0;
-    int tempsPrecedent = 0, tempsActuel = 0;
+    int previousTime = 0, currentTime = 0;
     char *niveau;
 
     marioimages = malloc(12 * sizeof(Chars));
@@ -81,33 +81,33 @@ void game(SDL_Surface* screen)
     S = ChargerImages();
     shroom = ChargerObject();
     m = ChargerMap(niveau);
-    ChargerChars(&mario, m, marioimages);
+    LoadChars(&mario, m, marioimages);
     AfficherMap(m, screen, S);
     SDL_Flip(screen);
 
 while(!in.key[SDLK_ESCAPE] && !in.quit && !keepGoing)// simplification de la gestion des touches
 	{
-        tempsActuel = SDL_GetTicks();
-        if (tempsActuel - tempsPrecedent > 4) /* Si 30 ms se sont écoulées depuis le dernier tour de boucle */
+        currentTime = SDL_GetTicks();
+        if (currentTime - previousTime > 4) /* Si 30 ms se sont écoulées depuis le dernier tour de boucle */
         {
             UpdateEvents(&in);
             MapScroll(m, &mario);
-            Evolue(&in,m,&mario,S, shroom);
+            Evolve(&in,m,&mario,S, shroom);
             AfficherMap(m,screen,S);
             objectmove(shroom, &mario, m->xscroll,m->yscroll, m, S);
             AfficherObject(screen, shroom, m->xscroll,m->yscroll);
-            AfficherPerso(&mario,screen,m->xscroll,m->yscroll, marioimages);
+            ShowPerson(&mario,screen,m->xscroll,m->yscroll, marioimages);
             SDL_Flip(screen);
-            keepGoing = NiveauFini(screen, &mario, m);
-            tempsPrecedent = tempsActuel; /* Le temps "actuel" devient le temps "precedent" pour nos futurs calculs */
+            keepGoing = FinishLevel(screen, &mario, m);
+            previousTime = currentTime; /* Le temps "actuel" devient le temps "precedent" pour nos futurs calculs */
         }
         else
         {
-        SDL_Delay(4 - (tempsActuel - tempsPrecedent));
+        SDL_Delay(4 - (currentTime - previousTime));
         }
     }
 
     LibererMap(m,S);
-    LibererChars(&mario, marioimages);
+    FreeChars(&mario, marioimages);
     LibererObject(shroom);
 }

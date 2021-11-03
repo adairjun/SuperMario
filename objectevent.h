@@ -8,7 +8,7 @@ Antoine Drabble
 Création: 24.01.13
 */
 
-#ifndef OBJECTMOVE_DEF//ceci permet d'éviter de faire plusieurs fois le même include.
+#ifndef OBJECTMOVE_DEF//this makes it possible to avoid doing the same include several times.
 #define OBJECTMOVE_DEF
 
 #include <stdlib.h>

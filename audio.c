@@ -16,13 +16,13 @@ Création: 22.01.13
 #include "audio.h"
 
 FMOD_SOUND *music, *jump, *lose, *win, *shroom, *damage;
-FMOD_SYSTEM *sys; // FMOD, librairie qui gère la musique
+FMOD_SYSTEM *sys; // FMOD, library that manages music
 
 void audio_init(){
     FMOD_System_Create(&sys);
     FMOD_System_Init(sys, 4, FMOD_INIT_NORMAL, NULL);
-    FMOD_System_CreateSound(sys, "sound/music.mp3", FMOD_SOFTWARE | FMOD_2D | FMOD_CREATESTREAM | FMOD_LOOP_NORMAL, 0, &music); //Charge la musique
-    FMOD_Sound_SetLoopCount(music, -1); // Active la répétition à l'infini
+    FMOD_System_CreateSound(sys, "sound/music.mp3", FMOD_SOFTWARE | FMOD_2D | FMOD_CREATESTREAM | FMOD_LOOP_NORMAL, 0, &music); //Load the music
+    FMOD_Sound_SetLoopCount(music, -1); // Activate endless repetition
     FMOD_System_CreateSound(sys, "sound/smb_jumpsmall.wav", FMOD_CREATESAMPLE, 0, &jump);
     FMOD_System_CreateSound(sys, "sound/smb_mariodie.wav", FMOD_CREATESAMPLE, 0, &lose);
     FMOD_System_CreateSound(sys, "sound/smb_stage_clear.wav", FMOD_CREATESAMPLE, 0, &win);

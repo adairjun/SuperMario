@@ -7,7 +7,7 @@ Antoine Drabble
 
 Création: 17.01.13
 */
-#ifndef EVENT_DEF//ceci permet d'éviter de faire plusieurs fois le même include.
+#ifndef EVENT_DEF//this makes it possible to avoid doing the same include several times.
 #define EVENT_DEF
 
 #include <stdlib.h>
@@ -27,11 +27,11 @@ typedef struct
 }Input;
 
 void UpdateEvents(Input* in);
-void Evolue(Input* in, Map *m, Chars *mario, Sprites *S, Object* shroom);
-void Deplace(Map* m,Chars* mario,int vx,int vy, Sprites* S, Object* shroom);
-int EssaiDeplacement(Map* m,Chars* mario,int vx,int vy, Sprites* S, Object* shroom);
+void Evolve(Input* in, Map *m, Chars *mario, Sprites *S, Object* shroom);
+void Move(Map* m,Chars* mario,int vx,int vy, Sprites* S, Object* shroom);
+int MovementTest(Map* m,Chars* mario,int vx,int vy, Sprites* S, Object* shroom);
 void MapScroll(Map* m, Chars* mario);
 int CollisionDecor(Map* m, SDL_Rect* perso, Sprites* S, Chars* mario, int vx, Object* shroom);
-int NiveauFini (SDL_Surface* screen, Chars* mario, Map* m);
+int FinishLevel (SDL_Surface* screen, Chars* mario, Map* m);
 
 #endif

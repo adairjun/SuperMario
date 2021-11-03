@@ -28,7 +28,7 @@ Sprites* ChargerImages()
     S = malloc(NbSprites*sizeof(Sprites));
 
     S[0].sprite = IMG_Load("images/sky.png");
-    S[1].sprite = IMG_Load("images/sol.png");
+    S[1].sprite = IMG_Load("images/soil.png");
     S[2].sprite = IMG_Load("images/block.png");
     S[3].sprite = IMG_Load("images/box.png");
     S[4].sprite = IMG_Load("images/pipe1.png");

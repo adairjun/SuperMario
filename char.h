@@ -8,7 +8,7 @@ Antoine Drabble
 Création: 17.01.13
 */
 
-#ifndef CHAR_DEF//ceci permet d'éviter de faire plusieurs fois le même include.
+#ifndef CHAR_DEF//this makes it possible to avoid doing the same include several times.
 #define CHAR_DEF
 
 #include <stdlib.h>
@@ -24,11 +24,11 @@ typedef struct
 SDL_Surface* image;
 SDL_Rect position;
 int jump, jumptime, G, selectedmario;
-int directionmario, temp, dernieredirection, win, lose, lvl, lvlperdu, invisible;
+int directionmario, temp, lastdirection, win, lose, lvl, lvllost, invisible;
 }Chars;
 
-void ChargerChars(Chars* mario, Map* m, Chars* marioimages);
-void AfficherPerso(Chars* mario, SDL_Surface* screen, int xscroll, int yscroll, Chars* marioimages);
-void LibererChars (Chars* mario, Chars* marioimages);
+void LoadChars(Chars* mario, Map* m, Chars* marioimages);
+void ShowPerson(Chars* mario, SDL_Surface* screen, int xscroll, int yscroll, Chars* marioimages);
+void FreeChars (Chars* mario, Chars* marioimages);
 
 #endif

@@ -22,7 +22,7 @@ void credits(SDL_Surface* screen)
     SDL_Rect positionCredits;
     SDL_Init(SDL_INIT_VIDEO);
     SDL_Event event;
-    int tempsPrecedent = 0, tempsActuel = 0;
+    int previousTime = 0, currentTime = 0;
 
     ImgCredits = IMG_Load("images/credits.png");
     positionCredits.x = screen->w / 2 - ImgCredits->w / 2;
@@ -52,11 +52,11 @@ void credits(SDL_Surface* screen)
         keepGoing = 0;
     }
 
-        tempsActuel = SDL_GetTicks();
-        if (tempsActuel - tempsPrecedent > 10) /* Si 30 ms se sont écoulées depuis le dernier tour de boucle */
+        currentTime = SDL_GetTicks();
+        if (currentTime - previousTime > 10) /* If 10 ms have elapsed since the last loop round */
         {
-            positionCredits.y++; // On déplace les crédits
-            tempsPrecedent = tempsActuel; // Le temps "actuel" devient le temps "precedent" pour nos futurs calculs
+            positionCredits.y++; // We move the credits
+            previousTime = currentTime; // The "current" time becomes the "previous" time for our future calculations
         }
 
         SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 82, 131, 252));

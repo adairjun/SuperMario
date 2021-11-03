@@ -50,8 +50,8 @@ int CollisionDecor(Map* m, SDL_Rect* perso, Sprites* S, Chars* mario, int vx, Ob
 	ymax = (perso->y + perso->h -1) / Size_Sprite;
     mario->G=1;
 
-    if (mario->lvlperdu>0){
-        mario->lvlperdu--;
+    if (mario->lvllost>0){
+        mario->lvllost--;
         if(mario->invisible==1)
             mario->invisible=0;
         else
@@ -71,7 +71,7 @@ if (perso->h+perso->y<m->Nb_Block_H*Size_Sprite-10){
             mario->jump = 1;
         }
         if (indicetile==10){
-            if (mario->lvlperdu<1)
+            if (mario->lvllost<1)
             {
                 if(mario->lvl==1)
                     mario->lose=1;
@@ -79,10 +79,10 @@ if (perso->h+perso->y<m->Nb_Block_H*Size_Sprite-10){
                     audio_play(6);
                     mario->lvl=1;
                     mario->position.y+=10;
-                    mario->lvlperdu=400;
+                    mario->lvllost=400;
             }
         }
-        else{ //Si on ne touche pas le sol et que le temps de saut est de plus de 1000, on retombe.
+        else{ //Si on ne touche pas le soil et que le temps de saut est de plus de 1000, on retombe.
             if(mario->jumptime>1000)
                 mario->jump = 0;
         }
@@ -140,7 +140,7 @@ if (perso->h+perso->y<m->Nb_Block_H*Size_Sprite-10){
 	return 0; //Si pas de collision
 }
 
-int EssaiDeplacement(Map* m, Chars* mario, int vx, int vy, Sprites* S, Object* shroom)
+int MovementTest(Map* m, Chars* mario, int vx, int vy, Sprites* S, Object* shroom)
 {
 	SDL_Rect test;
 	test = mario->position;
@@ -152,7 +152,7 @@ int EssaiDeplacement(Map* m, Chars* mario, int vx, int vy, Sprites* S, Object* s
 
     if(test.y+test.h>(Size_Sprite*m->Nb_Block_H)+100)
         mario->lose=1;
-	if (mario->G==1) // Gravité activée si on ne touche pas le sol
+	if (mario->G==1) // Gravité activée si on ne touche pas le soil
 		test.y += 2;
 	else
         mario->jumptime = 1;
@@ -172,21 +172,21 @@ int EssaiDeplacement(Map* m, Chars* mario, int vx, int vy, Sprites* S, Object* s
 	return 0;
 }
 
-void Deplace(Map* m, Chars* mario,int vx,int vy, Sprites* S, Object* shroom)
+void Move(Map* m, Chars* mario,int vx,int vy, Sprites* S, Object* shroom)
 {
 	if (vx>=Size_Sprite || vy>=Size_Sprite) //si jamais le vercteur est plus grand qu'un sprite, pour pas qu'on traverse.
 	{
-		Deplace(m,mario,vx/2,vy/2,S,shroom);
-		Deplace(m,mario,vx/3,vy/3,S,shroom);
-		Deplace(m,mario,vx/4,vy/4,S,shroom);
+		Move(m,mario,vx/2,vy/2,S,shroom);
+		Move(m,mario,vx/3,vy/3,S,shroom);
+		Move(m,mario,vx/4,vy/4,S,shroom);
 		return;
 	}
-	if (EssaiDeplacement(m,mario,vx,vy,S,shroom)==1) //Si pas de collision
+	if (MovementTest(m,mario,vx,vy,S,shroom)==1) //Si pas de collision
 		return;
 
 }
 
-void Evolue(Input* in, Map *m, Chars *mario, Sprites *S, Object* shroom)
+void Evolve(Input* in, Map *m, Chars *mario, Sprites *S, Object* shroom)
 {
 	int vx,vy;
     int vitesse = 2;
@@ -215,7 +215,7 @@ void Evolue(Input* in, Map *m, Chars *mario, Sprites *S, Object* shroom)
 		mario->directionmario = 2;
 	}
 
-	Deplace(m,mario,vx,vy, S, shroom);
+	Move(m,mario,vx,vy, S, shroom);
 }
 
 void MapScroll(Map* m, Chars* mario)
@@ -232,7 +232,7 @@ void MapScroll(Map* m, Chars* mario)
             m->yscroll=m->Nb_Block_H*Size_Sprite-WindowH-1;
 }
 
-int NiveauFini (SDL_Surface* screen, Chars* mario, Map* m)
+int FinishLevel (SDL_Surface* screen, Chars* mario, Map* m)
 {
     SDL_Event event;
     int keepGoing;
