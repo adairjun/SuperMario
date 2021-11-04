@@ -17,7 +17,9 @@ Création: 07.01.13
 #include "map.h"
 #include "char.h"
 #include "object.h"
+#include "enemy.h"
 #include "objectevent.h"
+#include "enemyevent.h"
 #include "event.h"
 #include "audio.h"
 
@@ -29,6 +31,7 @@ void game(SDL_Surface* screen)
     Chars mario;
     Chars* marioimages;
     Object* shroom;
+    Enemy* enemy;
     Input in;
     int keepGoing = 0;
     int previousTime = 0, currentTime = 0;
@@ -81,6 +84,7 @@ void game(SDL_Surface* screen)
     S = LoadImages();
     shroom = LoadObject();
     m = LoadMap(theLevel);
+    enemy = LoadEnemy(m);
     LoadChars(&mario, m, marioimages);
     ShowMap(m, screen, S);
     SDL_Flip(screen);
@@ -96,6 +100,8 @@ while(!in.key[SDLK_ESCAPE] && !in.quit && !keepGoing)// simplification of key ma
             ShowMap(m,screen,S);
             objectmove(shroom, &mario, m->xscroll,m->yscroll, m, S);
             ShowObject(screen, shroom, m->xscroll,m->yscroll);
+            enemymove(enemy, &mario, m->xscroll,m->yscroll, m, S);
+            ShowEnemy(screen, enemy, m->xscroll,m->yscroll);
             ShowPerson(&mario,screen,m->xscroll,m->yscroll, marioimages);
             SDL_Flip(screen);
             keepGoing = FinishLevel(screen, &mario, m);
@@ -110,4 +116,5 @@ while(!in.key[SDLK_ESCAPE] && !in.quit && !keepGoing)// simplification of key ma
     FreeMap(m,S);
     FreeChars(&mario, marioimages);
     FreeObject(shroom);
+    FreeEnemy(enemy);
 }

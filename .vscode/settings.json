@@ -8,6 +8,9 @@
         "bitset": "cpp",
         "istream": "cpp",
         "ostream": "cpp",
-        "streambuf": "cpp"
+        "streambuf": "cpp",
+        "enemy.h": "c",
+        "objectevent.h": "c",
+        "enemyevent.h": "c"
     }
 }
