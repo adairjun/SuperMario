@@ -34,6 +34,7 @@ int MovementTest(Map* m,Chars* mario,int vx,int vy, Sprites* S, Object* shroom);
 void MapScroll(Map* m, Chars* mario);
 void CollisionDecor(Map* m, SDL_Rect* person, Sprites* S, Chars* mario, int vx, Object* shroom);
 int CollisionDecor2(Map* m, SDL_Rect* person, Sprites* S, int vx);
+int CollisionDecor3(SDL_Rect* person, int vx, Enemy* flower, int currentIndex);
 int FinishLevel (SDL_Surface* screen, Chars* mario, Map* m);
 
 #endif

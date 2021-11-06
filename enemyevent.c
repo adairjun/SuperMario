@@ -28,12 +28,13 @@ void enemymove(Enemy* flower, Chars* mario, int xscroll, int yscroll, Map* m, Sp
 	    test.x+=flower->xSpeed[i];
 	    test.y+=flower->ySpeed[i];
         
-        int temp;
+        int temp, temp2;
 	    temp = CollisionDecor2(m, &test, S, flower->xSpeed[i]);
+        temp2 = CollisionDecor3(&test, flower->xSpeed[i],flower,i);
         flower->position[i] = test;
-        if (temp == 1) {
+        if (temp == 1 || temp2 == 1) {
             flower->xSpeed[i] = -flower->xSpeed[i];
-        } else if (temp == 2) {
+        } else if (temp == 2 || temp2 == 2)  {
             flower->ySpeed[i] = -flower->ySpeed[i];
         }
 

@@ -172,6 +172,26 @@ int CollisionDecor2(Map* m, SDL_Rect* person, Sprites* S, int vx)
 	return 0; // no collision
 }
 
+int CollisionDecor3(SDL_Rect* person, int vx, Enemy* flower, int currentIndex) {
+    int xmin,xmax,ymin,ymax,i,j,indicetile;
+	xmin = person->x;
+	ymin = person->y;
+	xmax = (person->x + person->w -1);
+	ymax = (person->y + person->h -1);
+
+    for (int i=1; i<= flower->nb_objet; i++) {
+        if (i == currentIndex) {
+            continue;
+        }
+        if (xmin <= flower->position[i].x && xmax >= flower->position[i].x) {
+            person->x-=vx;
+            return 1;  //  Horizontal collision
+        }
+    }
+
+	return 0; // no collision
+}
+
 int MovementTest(Map* m, Chars* mario, int vx, int vy, Sprites* S, Object* shroom)
 {
 	SDL_Rect test;
