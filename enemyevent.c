@@ -13,6 +13,7 @@ Création: 24.01.13
 #include <SDL.h>
 #include <SDL_image.h>
 
+#include "event.h"
 #include "enemyevent.h"
 
 
@@ -22,8 +23,22 @@ void enemymove(Enemy* flower, Chars* mario, int xscroll, int yscroll, Map* m, Sp
     SDL_Rect position[50];
 
     for (i=1; i<=flower->nb_objet; i++){
-        flower->position[i].x = flower->position[i].x - flower->xSpeed;
-        flower->position[i].y = flower->position[i].y - flower->ySpeed;
+        SDL_Rect test;
+        test = flower->position[i];
+	    test.x+=flower->xSpeed[i];
+	    test.y+=flower->ySpeed[i];
+        
+        int temp;
+	    temp = CollisionDecor2(m, &test, S, flower->xSpeed[i]);
+        flower->position[i] = test;
+        if (temp == 1) {
+            flower->xSpeed[i] = -flower->xSpeed[i];
+        } else if (temp == 2) {
+            flower->ySpeed[i] = -flower->ySpeed[i];
+        }
+
+        // flower->position[i].x = flower->position[i].x + flower->xSpeed[i];
+        // flower->position[i].y = flower->position[i].y + flower->ySpeed[i];
 
         position[i].x = flower->position[i].x - xscroll;
         position[i].y = flower->position[i].y - yscroll;
@@ -40,7 +55,13 @@ void enemymove(Enemy* flower, Chars* mario, int xscroll, int yscroll, Map* m, Sp
             ){}
             else{
                 // mario died
-                mario->lose =1;
+                if(mario->lvl==1)
+                    mario->lose=1;
+                if(mario->lvl==2)
+                    audio_play(6);
+                    mario->lvl=1;
+                    mario->position.y+=10;
+                    mario->lvllost=400;
             }
        }
    }

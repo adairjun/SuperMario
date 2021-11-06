@@ -24,8 +24,8 @@ typedef struct
     SDL_Surface* image;
     SDL_Rect position[50];
     int nb_objet, used[50];
-    int xSpeed;
-    int ySpeed;
+    int xSpeed[50];
+    int ySpeed[50];
 }Enemy;
 
 Enemy* LoadEnemy(Map* m);

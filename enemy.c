@@ -47,11 +47,11 @@ Enemy* LoadEnemy(Map* m)
     flower->position[flower->nb_objet].w = 32;
     flower->position[flower->nb_objet].h = 32;
 
-    flower->position[flower->nb_objet].x = 900;
+    flower->position[flower->nb_objet].x = 800;
     flower->position[flower->nb_objet].y = m->Nb_Block_H*Size_Sprite-2*Size_Sprite-flower->position[flower->nb_objet].h;
 
-    flower->xSpeed = 2;
-    flower->ySpeed = 0;
+    flower->xSpeed[flower->nb_objet] = -2;
+    flower->ySpeed[flower->nb_objet] = 0;
 
     return flower;
 }

@@ -18,6 +18,7 @@ Création: 07.01.13
 #include <fmod.h>
 
 #include "event.h"
+#include "enemy.h"
 
 void UpdateEvents(Input* in)
 {
@@ -41,7 +42,7 @@ void UpdateEvents(Input* in)
 	}
 }
 
-int CollisionDecor(Map* m, SDL_Rect* person, Sprites* S, Chars* mario, int vx, Object* shroom)
+void CollisionDecor(Map* m, SDL_Rect* person, Sprites* S, Chars* mario, int vx, Object* shroom)
 {
 	int xmin,xmax,ymin,ymax,i,j,indicetile;
 	xmin = person->x / Size_Sprite;
@@ -137,7 +138,38 @@ if (person->h+person->y<m->Nb_Block_H*Size_Sprite-10){
     }
 
 
-	return 0; // If no collision
+	return;
+}
+
+int CollisionDecor2(Map* m, SDL_Rect* person, Sprites* S, int vx)
+{
+	int xmin,xmax,ymin,ymax,i,j,indicetile;
+	xmin = person->x / Size_Sprite;
+	ymin = person->y / Size_Sprite;
+	xmax = (person->x + person->w -1) / Size_Sprite;
+	ymax = (person->y + person->h -1) / Size_Sprite;
+
+	i= (person->x + person->w) / Size_Sprite; //If we hit a block to our right,
+    for(j=ymin;j<=ymax;j++)
+    {
+        indicetile = m->LoadedMap[i][j];
+        if (S[indicetile].getThrough){
+            person->x-=vx;
+            return 1;  //  Horizontal collision
+        }
+    }
+    i = (person->x -1) / Size_Sprite; //If we touch a left notepad
+    for(j=ymin;j<=ymax;j++)
+    {
+        indicetile = m->LoadedMap[i][j];
+        if (S[indicetile].getThrough){
+            person->x-=vx;
+            return 1; // Horizontal collision
+        }
+    }
+
+
+	return 0; // no collision
 }
 
 int MovementTest(Map* m, Chars* mario, int vx, int vy, Sprites* S, Object* shroom)
@@ -147,8 +179,7 @@ int MovementTest(Map* m, Chars* mario, int vx, int vy, Sprites* S, Object* shroo
 	test.x+=vx;
 	test.y+=vy;
 
-	int temp;
-	temp = CollisionDecor(m, &test, S, mario, vx, shroom);
+	CollisionDecor(m, &test, S, mario, vx, shroom);
 
     if(test.y+test.h>(Size_Sprite*m->Nb_Block_H)+100)
         mario->lose=1;
@@ -164,12 +195,10 @@ int MovementTest(Map* m, Chars* mario, int vx, int vy, Sprites* S, Object* shroo
         mario->jumptime = 1001;
         test.y+=vy;
     }
-	if (temp==0) // If no collision, we modify the position of the character
-	{
-		mario->position = test;
-		return 1;
-	}
-	return 0;
+
+	mario->position = test;
+	return 1;
+	
 }
 
 void Move(Map* m, Chars* mario,int vx,int vy, Sprites* S, Object* shroom)
@@ -181,9 +210,8 @@ void Move(Map* m, Chars* mario,int vx,int vy, Sprites* S, Object* shroom)
 		Move(m,mario,vx/4,vy/4,S,shroom);
 		return;
 	}
-	if (MovementTest(m,mario,vx,vy,S,shroom)==1) //If no collision
-		return;
-
+	MovementTest(m,mario,vx,vy,S,shroom); //If no collision
+    return;
 }
 
 void Evolve(Input* in, Map *m, Chars *mario, Sprites *S, Object* shroom)
